@@ -1,4 +1,5 @@
 import time 
+import os
 import csv
 import board
 import busio
@@ -32,7 +33,11 @@ filename = curr_date + ".csv"
 #get the voltage from the channel
 voltage = volt_divider()
 
-#write the voltage and time to a csv file
-with open(filename, 'w', newline='') as csvfile:
-    csvfile.writer(csvfile, delimiter=',')
+#check if file exists, if not create it
+if os.path.isfile(filename) != True:
+    open(filename, "w")
+
+#append the voltage and time to a csv file
+with open(filename, 'a') as csvfile:
+    csvfile = csv.writer(csvfile, delimiter=',')
     csvfile.writerow({curr_time,voltage})
