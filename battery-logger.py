@@ -1,4 +1,4 @@
-import time 
+import time
 import os
 import csv
 import board
@@ -22,7 +22,7 @@ def volt_divider():
     return round(chan.voltage*vcal*(r1+r2)/r2,2)
 
 #get the current date and time
-curr_time = time.strftime("%Y-%m-%d-%H-%M-%S")
+curr_time = time.strftime("%H:%M:%S")
 
 #get current date
 curr_date = time.strftime("%Y-%m-%d")
@@ -33,11 +33,13 @@ filename = curr_date + ".csv"
 #get the voltage from the channel
 voltage = volt_divider()
 
-#check if file exists, if not create it
+#check if file exists, if not create it and write header
 if os.path.isfile(filename) != True:
-    open(filename, "w")
+    with open(filename, "w", newline='') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',')
+        writer.writerow({"date","time","voltage"})
 
 #append the voltage and time to a csv file
-with open(filename, 'a') as csvfile:
-    csvfile = csv.writer(csvfile, delimiter=',')
-    csvfile.writerow({curr_time,voltage})
+with open(filename, 'a', newline='') as csvfile:
+    writer = csv.writer(csvfile, delimiter=',')
+    writer.writerow({curr_date,curr_time,voltage})
