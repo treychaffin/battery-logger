@@ -37,9 +37,9 @@ voltage = volt_divider()
 if os.path.isfile(filename) != True:
     with open(filename, "w", newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter=',')
-        writer.writerow({"date","time","voltage"})
+        writer.writerow(["date","time","voltage"])
 
 #append the voltage and time to a csv file
 with open(filename, 'a', newline='') as csvfile:
     writer = csv.writer(csvfile, delimiter=',')
-    writer.writerow({curr_date,curr_time,voltage})
+    writer.writerow([curr_date,curr_time,voltage])
